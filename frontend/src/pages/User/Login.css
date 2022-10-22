@@ -1,0 +1,15 @@
+.Login {
+  padding: 60px 0;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 1;
+  align-items: center;
+  justify-content: center;
+}
+
+.login {
+  font-size: clamp(1.5rem, 5vw, 3rem);
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
