@@ -9,13 +9,14 @@ import {
   Typography,
   InputAdornment,
 } from "@mui/material";
-import { MailIcon, AccountCircle } from "@mui/icons-material";
+import { MailIcon, AccountCircle, Password } from "@mui/icons-material";
 import "../User/Login.css";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function AdminLogin() {
   const navigate = useNavigate();
-  const users = [{ email: "abc@gmail.com", password: "123456" }];
+  const users = [{ email: "admin@gmail.com", password: "123456" }];
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [authenticated, setAuthenticated] = useState(
@@ -29,12 +30,23 @@ export default function AdminLogin() {
   //searching for email in user array, if exists then check for password
   function handleSubmit(event) {
     event.preventDefault();
-    const account = users.find((user) => user.email === email);
 
-    if (account && account.password === password) {
-      localStorage.setItem("authenticated", true);
-      navigate("/user");
-    }
+    axios({
+      method: "get",
+      url: "http://localhost:5000/admin/",
+    }).then((res) => {
+      var adminData = res.data;
+      // console.log(adminData[0]);
+      adminData.map((obj) => {
+        if (email === obj.email) {
+          if (password === obj.password) {
+            localStorage.setItem("authenticated", true);
+            var strr = `/admin/${obj.adminId}`;
+            navigate(strr);
+          }
+        }
+      });
+    });
   }
 
   return (
@@ -43,11 +55,13 @@ export default function AdminLogin() {
       <FormControl sx={{ minWidth: 400 }}>
         <TextField
           sx={{ marginBottom: 1 }}
-          startAdornment={
-            <InputAdornment position="start">
-              <AccountCircle />
-            </InputAdornment>
-          }
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <AccountCircle />
+              </InputAdornment>
+            ),
+          }}
           id="mail"
           size="normal"
           label="Email"
@@ -57,7 +71,15 @@ export default function AdminLogin() {
         />
         <TextField
           id="pass"
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <Password />
+              </InputAdornment>
+            ),
+          }}
           label="Password"
+          type="password"
           size="normal"
           variant="outlined"
           value={password}

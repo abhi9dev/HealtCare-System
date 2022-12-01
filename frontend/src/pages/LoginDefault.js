@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 import ImageSliderr from "../component/ImageSlider";
 import Box from "../component/Box";
+import PreviewImage from "./../assets/images/previeww.jpg";
 
 import patientImage from "../assets/images/patient.png";
 import doctorImage from "../assets/images/doctor.png";
@@ -13,7 +14,7 @@ const LoginDefault = () => {
   return (
     <Body>
       <ImageContainer>
-        <h1>Preview Images</h1>
+        <img src={PreviewImage} alt="preview" />
       </ImageContainer>
       <Boxes>
         <Box title="Patient" link="ul" previewImage={patientImage} />
@@ -47,7 +48,7 @@ const ImageContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 50%;
+  height: 80vh;
   width: 80%;
   margin: 2rem 0;
 `;

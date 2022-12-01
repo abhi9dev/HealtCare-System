@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import {
   Button,
   FormControl,
@@ -9,15 +10,23 @@ import {
   Typography,
   InputAdornment,
 } from "@mui/material";
-import { MailIcon, AccountCircle } from "@mui/icons-material";
+import { MailIcon, AccountCircle, Password } from "@mui/icons-material";
 import "./Login.css";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const navigate = useNavigate();
   const users = [{ email: "abc@gmail.com", password: "123456" }];
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [values, setValues] = React.useState({
+    amount: "",
+    password: "",
+    weight: "",
+    weightRange: "",
+    showPassword: false,
+  });
   const [authenticated, setAuthenticated] = useState(
     localStorage.getItem(localStorage.getItem("authenticated") || false)
   );
@@ -26,15 +35,32 @@ export default function Login() {
     return email.length > 0 && password.length > 0;
   }
 
-  //searching for email in user array, if exists then check for password
+  const handleClickShowPassword = () => {
+    setValues({
+      ...values,
+      showPassword: !values.showPassword,
+    });
+  };
+
   function handleSubmit(event) {
     event.preventDefault();
-    const account = users.find((user) => user.email === email);
 
-    if (account && account.password === password) {
-      localStorage.setItem("authenticated", true);
-      navigate("/user/:id");
-    }
+    axios({
+      method: "get",
+      url: "http://localhost:5000/user/",
+    }).then((res) => {
+      var usersData = res.data;
+      // console.log(usersData[0]);
+      usersData.map((obj) => {
+        if (email === obj.email) {
+          if (password === obj.password) {
+            localStorage.setItem("authenticated", true);
+            var strr = `/user/${obj.healthID}`;
+            navigate(strr);
+          }
+        }
+      });
+    });
   }
 
   return (
@@ -43,12 +69,14 @@ export default function Login() {
       <FormControl sx={{ minWidth: 400 }}>
         <TextField
           sx={{ marginBottom: 1 }}
-          startAdornment={
-            <InputAdornment position="start">
-              <AccountCircle />
-            </InputAdornment>
-          }
           id="mail"
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <AccountCircle />
+              </InputAdornment>
+            ),
+          }}
           size="normal"
           label="Email"
           variant="outlined"
@@ -57,7 +85,15 @@ export default function Login() {
         />
         <TextField
           id="pass"
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <Password />
+              </InputAdornment>
+            ),
+          }}
           label="Password"
+          type="password"
           size="normal"
           variant="outlined"
           value={password}
