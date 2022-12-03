@@ -25,8 +25,8 @@ const columns = [
   { id: "symptoms", label: "Symptoms", minWidth: 150 },
   { id: "medicines", label: "Medicines", minWidth: 150 },
   { id: "medicineFees", label: "Medicines Fees", minWidth: 80 },
-  { id: "HospitalFees", label: "Hospital Fees", minWidth: 80 },
-  { id: "starRating", label: "Star Rating", minWidth: 130 },
+  { id: "consultationFees", label: "Hospital Fees", minWidth: 80 },
+  { id: "starReview", label: "Star Rating", minWidth: 130 },
 ];
 
 export default function MedicalHistory() {
@@ -36,8 +36,7 @@ export default function MedicalHistory() {
   const [responseArr, setResponseArr] = React.useState([]);
   const [filteredRows, setFilteredRows] = React.useState([]);
   const [search, setSearch] = React.useState(true);
-  const [toBeRead, setToBeRead] = React.useState(true);
-  const [value, setValue] = React.useState(0);
+  const [toBeRead, setToBeRead] = React.useState(false);
 
   const { id } = useParams();
   // console.log(doctorName, month, year);
@@ -152,17 +151,31 @@ export default function MedicalHistory() {
     getData();
   }, [doctor, month, year]);
 
-  const sendRating = (doctorID) => {
-    // setToBeRead(true);
+  const sendRating = (doctorID, starValue, dateVisited) => {
+    setToBeRead(true);
     console.log(doctorID);
 
-    // axios
-    //   .post(`http://localhost:5000/doc/${doctorID}/rating`, {
-    //     rating: value,
-    //   })
-    //   .then((res) => {
-    //     console.log(res.data);
-    //   });
+    //update the rating in the doctor reivews arrays for settings the rating
+    axios
+      .patch(`http://localhost:5000/doc/${doctorID}/rating`, {
+        healthID: id,
+        starReview: starValue,
+        note: "good doctor",
+      })
+      .then((res) => {
+        console.log(res.data);
+      });
+
+    //update the rating in the user medical history array for displaying the rating
+    axios
+      .patch(`http://localhost:5000/user/${id}/rating`, {
+        doctorID: doctorID,
+        starReview: starValue,
+        dateVisited: dateVisited,
+      })
+      .then((res) => {
+        console.log(res.data);
+      });
   };
 
   return (
@@ -234,6 +247,7 @@ export default function MedicalHistory() {
               {/* contents of the table are displayed here */}
               <TableBody>
                 {filteredRows.map((row) => {
+                  console.log(row);
                   return (
                     <TableRow hover role="checkbox" tabIndex={-1} key={uuid()}>
                       {columns.map((column) => {
@@ -249,21 +263,23 @@ export default function MedicalHistory() {
                                 : datee.toLocaleDateString()}
                             </TableCell>
                           );
-                        } else if (column.id === "starRating") {
+                        } else if (column.id === "starReview") {
                           //rating not given yet
-                          if (value === undefined) {
+                          console.log(value);
+                          if (value === 0) {
                             return (
                               <TableCell key={column.id} align={column.align}>
                                 <Rating
                                   name="Rate Doctor"
                                   value={value}
                                   onChange={(event, newValue) => {
-                                    setValue(newValue);
+                                    sendRating(
+                                      row.doctorID,
+                                      newValue,
+                                      row.dateVisited
+                                    );
                                   }}
-                                  onClick={(e) => {
-                                    // sendRating(row.doctorID);
-                                    console.log(row.doctorID);
-                                  }}
+                                  readOnly={toBeRead}
                                 />
                               </TableCell>
                             );

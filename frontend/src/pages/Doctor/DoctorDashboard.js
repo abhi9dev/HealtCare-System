@@ -27,20 +27,21 @@ const DoctorDashboard = (props) => {
     async function getDoctorData() {
       await axios.get(url).then((res) => {
         setDoctorData(res.data);
+        // console.log(res.data);
 
         res.data.reviews.map((review) => {
           var ratingg = review.starReview;
-          setTotalRating(totalRating + ratingg);
+          setTotalRating(res.data.reviews.length);
 
-          if (ratingg === 1) {
+          if (ratingg == 1) {
             setOneRate(oneRate + 1);
-          } else if (ratingg === 2) {
+          } else if (ratingg == 2) {
             setTwoRate(twoRate + 1);
-          } else if (ratingg === 3) {
+          } else if (ratingg == 3) {
             setThreeRate(threeRate + 1);
-          } else if (ratingg === 4) {
+          } else if (ratingg == 4) {
             setFourRate(fourRate + 1);
-          } else if (ratingg === 5) {
+          } else if (ratingg == 5) {
             setFiveRate(fiveRate + 1);
           }
         });
@@ -50,15 +51,14 @@ const DoctorDashboard = (props) => {
     if (loggedInUser) {
       setAuthenticated(loggedInUser);
       getDoctorData();
-      // console.log(doctorData);
-      // console.log({
-      //   oneRate,
-      //   twoRate,
-      //   threeRate,
-      //   fourRate,
-      //   fiveRate,
-      //   totalRating,
-      // });
+      console.log(
+        (parseInt(oneRate) +
+          parseInt(twoRate) * 2 +
+          parseInt(threeRate) * 3 +
+          parseInt(fourRate) * 4 +
+          parseInt(fiveRate) * 5) /
+          totalRating
+      );
     }
   }, []);
 
@@ -77,18 +77,30 @@ const DoctorDashboard = (props) => {
             </Name>
             <h5>Have a great Day!!</h5>
           </Part1>
-          <Part2 elevation={8}>
+          <Part2 elevation={10}>
             <SubPart1>
               <p>Overall Rating</p>
-              <Rating readOnly value={totalRating} size="large" />
+              <Rating
+                readOnly
+                value={
+                  (parseInt(oneRate) +
+                    parseInt(twoRate) * 2 +
+                    parseInt(threeRate) * 3 +
+                    parseInt(fourRate) * 4 +
+                    parseInt(fiveRate) * 5) /
+                  totalRating
+                }
+                size="large"
+              />
               <p>
-                {(oneRate +
-                  twoRate * 2 +
-                  threeRate * 3 +
-                  fourRate * 4 +
-                  fiveRate * 5) /
+                {(parseInt(oneRate) +
+                  parseInt(twoRate) * 2 +
+                  parseInt(threeRate) * 3 +
+                  parseInt(fourRate) * 4 +
+                  parseInt(fiveRate) * 5) /
                   totalRating}{" "}
-                average rating out of {totalRating} reviews.
+                average rating out of{" "}
+                {oneRate + twoRate + threeRate + fourRate + fiveRate} reviews.
               </p>
             </SubPart1>
             <svg width="100" height="3">

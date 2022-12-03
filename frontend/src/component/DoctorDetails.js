@@ -15,6 +15,7 @@ export default function DoctorDetails(props) {
 
   useEffect(() => {
     function setRatingNum(doctorData) {
+      
       doctorData.reviews.map((review) => {
         var ratingg = review.starReview;
         setTotalRating(doctorData.reviews.length);

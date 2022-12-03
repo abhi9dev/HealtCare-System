@@ -40,7 +40,7 @@ export default function DoctorLogin() {
         if (email === obj.email) {
           if (password === obj.password) {
             localStorage.setItem("authenticated", true);
-            var strr = `/doctor/${obj.healthID}`;
+            var strr = `/doctor/${obj.doctorID}`;
             navigate(strr);
           }
         }

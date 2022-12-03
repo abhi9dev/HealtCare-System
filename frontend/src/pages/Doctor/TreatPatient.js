@@ -30,6 +30,7 @@ import VaccinesIcon from "@mui/icons-material/Vaccines";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import PaidIcon from "@mui/icons-material/Paid";
 import NotesIcon from "@mui/icons-material/Notes";
+import { v4 as uuid } from "uuid";
 
 import SideMenu from "./sideMenu";
 
@@ -88,7 +89,7 @@ export default function MedicalHistory() {
       symptoms: symptoms,
       medicines: medicines,
       medicineFees: medicineFees,
-      consultationFees: consultationFees,
+      hospitalFees: consultationFees,
       prescriptionNote: prescriptionNote,
     };
 
@@ -161,12 +162,7 @@ export default function MedicalHistory() {
               <TableBody>
                 {medicalData.map((row) => {
                   return (
-                    <TableRow
-                      hover
-                      role="checkbox"
-                      tabIndex={-1}
-                      key={row.code}
-                    >
+                    <TableRow hover role="checkbox" tabIndex={-1} key={uuid()}>
                       {columns.map((column) => {
                         const value = row[column.id];
 

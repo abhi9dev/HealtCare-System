@@ -144,6 +144,39 @@ app.patch("/user/:id", (req, res) => {
   updateData();
 });
 
+app.patch("/user/:id/rating", (req, res) => {
+  const datee = new Date(req.body.dateVisited);
+
+  async function addRating() {
+    await client.connect();
+    const db = client.db(dbName);
+    const collection = db.collection("userData");
+
+    // console.log(req.body);
+
+    const medNm = await collection.findOne({ healthID: req.params.id });
+    // console.log(medNm.medicalHistory);
+
+    var medHis = medNm.medicalHistory;
+    medHis.map((item) => {
+      var date = new Date(item.dateVisited);
+      if (
+        item.doctorID === req.body.doctorID &&
+        date.toLocaleDateString() === datee.toLocaleDateString()
+      ) {
+        item.starReview = req.body.starReview;
+      }
+    });
+
+    await collection.updateOne(
+      { healthID: req.params.id },
+      { $set: { medicalHistory: medHis } }
+    );
+  }
+
+  addRating();
+});
+
 /**                                     MEDICAL HISTORY SEARCH BEGINS...                            **/
 
 /****************************MEDICAL HISTORY SEARCH WITH ONE PARAMETER********************************* */
@@ -600,6 +633,24 @@ app.get("/doc", (req, res) => {
   getData();
 });
 
+app.get("/doc/:id", (req, res) => {
+  async function getData() {
+    // Use connect method to connect to the server
+    await client.connect();
+    console.log("Connected successfully to server");
+    const db = client.db(dbName);
+    const collection = db.collection("doctorData");
+
+    var findResult = await collection
+      .find({ doctorID: req.params.id })
+      .toArray();
+    // console.log(findResult);
+    res.send(findResult[0]);
+  }
+
+  getData();
+});
+
 app.post("/doc", (req, res) => {
   const dataa = req.body;
   // console.log(dataa);
@@ -656,6 +707,26 @@ app.post("/doc", (req, res) => {
   registerDoctor();
 });
 
+app.patch("/doc/:id/rating", (req, res) => {
+  async function addRating() {
+    await client.connect();
+    const db = client.db(dbName);
+    const collection = db.collection("doctorData");
+
+    var obj = {
+      healthID: req.body.healthID,
+      starReview: req.body.starReview,
+      note: req.body.note,
+    };
+
+    await collection.updateOne(
+      { doctorID: req.params.id },
+      { $push: { reviews: obj } }
+    );
+  }
+
+  addRating();
+});
 
 app.get("/admin", (req, res) => {
   async function getAdminData() {
