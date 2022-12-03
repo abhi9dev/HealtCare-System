@@ -1,0 +1,307 @@
+[{
+  "_id": {
+    "$oid": "6373128d6b37db24582d80fe"
+  },
+  "healthID": "AGSMH0801",
+  "doctorID": "AGDOC3924",
+  "address": "Indrajit Apartment, Koradi Road, Mankapur, Nagpur",
+  "age": 45,
+  "gender": "male",
+  "medicalHistory": [
+    {
+      "dateVisited": {
+        "$date": {
+          "$numberLong": "1628533800000"
+        }
+      },
+      "doctorName": "Mr. Ambale",
+      "hospitalName": "Ambale Hospital",
+      "hospitalAddress": "Ambale Hospital, Godhni Road, Nagpur",
+      "disease": "Common Cold",
+      "symptoms": "Runny Nose , Fever ,Cough",
+      "medicines": "Honitus , Synarist",
+      "medicineFees": 150,
+      "HospitalFees": 200
+    }
+  ],
+  "password": "123456",
+  "email": "ashigod@gmail.com",
+  "firstName": "Ashitosh",
+  "lastName": "Godse",
+  "reviews": [
+    {
+      "healthID": "ULAMH3003",
+      "starReview": 3,
+      "note": " good doctor"
+    }
+  ],
+  "hopitalAdd": "Godse Clinic, Near Faras Square, Nagpur",
+  "hospitalName": "Godse Clinic",
+  "city": "Nagpur",
+  "hospitalCity": "Nagpur",
+  "hospitalPincode": "440030",
+  "hospitalState": "Maharashtra",
+  "pincode": "440030",
+  "state": "Maharashtra",
+  "speciality": "ENT",
+  "DateOfBirth": {
+    "$date": {
+      "$numberLong": "661804200000"
+    }
+  },
+  "Phone No": "9422875442"
+},{
+  "_id": {
+    "$oid": "6378e0c4956d1fedf52bbb30"
+  },
+  "healthID": "AGSMH0801",
+  "doctorID": "AGDOC3924",
+  "address": "Indra Apartment, Koradi Road, Mankapur, Nagpur",
+  "age": 45,
+  "gender": "male",
+  "medicalHistory": [
+    {
+      "dateVisited": {
+        "$date": {
+          "$numberLong": "1628533800000"
+        }
+      },
+      "doctorName": "Mr. Ambale",
+      "hospitalName": "Ambale Hospital",
+      "hospitalAddress": "Ambale Hospital, Godhni Road, Nagpur",
+      "disease": "Common Cold",
+      "symptoms": "Runny Nose , Fever ,Cough",
+      "medicines": "Honitus , Synarist",
+      "medicineFees": 150,
+      "HospitalFees": 200
+    }
+  ],
+  "password": "123456",
+  "email": "omkarn@gmail.com",
+  "firstName": "Omkar",
+  "lastName": "Nikam",
+  "reviews": [
+    {
+      "healthID": "AGSMH0801",
+      "starReview": 4,
+      "note": " good doctor"
+    },
+    {
+      "healthID": "ULAMH3003",
+      "starReview": 3,
+      "note": "good"
+    }
+  ],
+  "hopitalAdd": "Get Well, Near Khondwa Square, Nagpur",
+  "hospitalName": "Get Well Clinic",
+  "city": "Nagpur",
+  "hospitalCity": "Nagpur",
+  "hospitalPincode": "440030",
+  "hospitalState": "Maharashtra",
+  "pincode": "440030",
+  "state": "Maharashtra",
+  "speciality": "Dentist",
+  "DateOfBirth": {
+    "$date": {
+      "$numberLong": "785442600000"
+    }
+  },
+  "Phone No": "8421875442"
+},{
+  "_id": {
+    "$oid": "6378e0c6956d1fedf52bbb31"
+  },
+  "healthID": "ADAMH2407",
+  "doctorID": "TNDOC3924",
+  "address": "30, Surya Apartments, Yerwada Indore",
+  "age": 55,
+  "gender": "female",
+  "medicalHistory": [
+    {
+      "dateVisited": {
+        "$date": {
+          "$numberLong": "1628533800000"
+        }
+      },
+      "doctorName": "Mrs. Nikam",
+      "hospitalName": "NIKAM Hospital",
+      "hospitalAddress": "30, Surya Apartments, Yerwada Indore",
+      "disease": "Viral Change Cough",
+      "symptoms": "Runny Nose , Fever ,Cough",
+      "medicines": "Honitus , Synarist",
+      "medicineFees": 150,
+      "HospitalFees": 200
+    }
+  ],
+  "password": "123456",
+  "email": "tanushkat@gmail.com",
+  "firstName": "Tanushka",
+  "lastName": "Nikam",
+  "reviews": [
+    {
+      "healthID": "ADAMH2407",
+      "starReview": 4,
+      "note": "good doctor"
+    },
+    {
+      "healthID": "ULNMH3003",
+      "starReview": 2,
+      "note": "worst"
+    }
+  ],
+  "hopitalAdd": "30, Surya Apartments, Yerwada Indore",
+  "hospitalName": "Surya Clinic",
+  "city": "Indore",
+  "hospitalCity": "Nagpur",
+  "hospitalPincode": "440130",
+  "hospitalState": "Maharashtra",
+  "pincode": "440130",
+  "state": "Maharashtra",
+  "speciality": "Psychiatrist",
+  "DateOfBirth": {
+    "$date": {
+      "$numberLong": "469909800000"
+    }
+  },
+  "Phone No": "8421985442"
+},{
+  "_id": {
+    "$oid": "6378e0c9956d1fedf52bbb32"
+  },
+  "healthID": "ASMMH16",
+  "doctorID": "PMDOC3924",
+  "address": "54, Jobin Villas, Hinjewadi Ratlam - 499617",
+  "age": 45,
+  "gender": "female",
+  "medicalHistory": [
+    {
+      "dateVisited": {
+        "$date": {
+          "$numberLong": "1628533800000"
+        }
+      },
+      "doctorName": "Mr. Ambale",
+      "hospitalName": "Ambale Hospital",
+      "hospitalAddress": "Ambale Hospital, Godhni Road, Nagpur",
+      "disease": "Dengue",
+      "symptoms": "Runny Nose , Fever ,Cough",
+      "medicines": "Eucalyptus leaves juice , Synarist",
+      "medicineFees": 150,
+      "HospitalFees": 200
+    }
+  ],
+  "password": "123456",
+  "email": "praptim@gmail.com",
+  "firstName": "Prapti",
+  "lastName": "Maheshwari",
+  "reviews": [
+    {
+      "healthID": "ASMMH16",
+      "starReview": 4,
+      "note": "very good doctor"
+    },
+    {
+      "healthID": "ULAMH3003",
+      "starReview": 3,
+      "note": "Average"
+    }
+  ],
+  "hopitalAdd": "Jobin Villas, Hinjewadi Ratlam , Akola",
+  "hospitalName": "Godse Clinic",
+  "city": "Akola",
+  "hospitalCity": "Akola",
+  "hospitalPincode": "499617",
+  "hospitalState": "Maharashtra",
+  "pincode": "499617",
+  "state": "Maharashtra",
+  "speciality": "Surgeon",
+  "DateOfBirth": {
+    "$date": {
+      "$numberLong": "785442600000"
+    }
+  },
+  "Phone No": "8495985442"
+},{
+  "_id": {
+    "$oid": "6378e0cb956d1fedf52bbb33"
+  },
+  "healthID": "AGSMH0801",
+  "doctorID": "ACDOC3924",
+  "address": "11, Varun Society, Manish Chowk, Akola",
+  "age": 54,
+  "gender": "female",
+  "medicalHistory": [
+    {
+      "dateVisited": {
+        "$date": {
+          "$numberLong": "1628533800000"
+        }
+      },
+      "doctorName": "Mr. Ambale",
+      "hospitalName": "Ambale Hospital",
+      "hospitalAddress": "Ambale Hospital, Godhni Road, Nagpur",
+      "disease": "HIV",
+      "symptoms": "Runny Nose , Fever,Cough",
+      "medicines": "Revital Tablets , Synarist",
+      "medicineFees": 150,
+      "HospitalFees": 200
+    }
+  ],
+  "password": "123456",
+  "email": "anjali1@gmail.com",
+  "firstName": "Anjali",
+  "lastName": "Chourasia",
+  "reviews": [
+    {
+      "healthID": "AGSMH0801",
+      "starReview": 5,
+      "note": "very good doctor"
+    },
+    {
+      "healthID": "ULAMH3003",
+      "starReview": 3,
+      "note": "good"
+    }
+  ],
+  "hopitalAdd": "Varun Society, Manish Chowk ,Akola",
+  "hospitalName": "Godse Clinic",
+  "city": "Akola",
+  "hospitalCity": "Akola",
+  "hospitalPincode": "441030",
+  "hospitalState": "Maharashtra",
+  "pincode": "441030",
+  "state": "Maharashtra",
+  "speciality": "Orthopedic",
+  "DateOfBirth": {
+    "$date": {
+      "$numberLong": "469909800000"
+    }
+  },
+  "Phone No": "8495985442"
+},{
+  "_id": {
+    "$oid": "6385b3e0059564c9f661e9f5"
+  },
+  "healthID": "OA741535",
+  "doctorID": "OAef7533",
+  "address": "Aynar Palace, kolhar, Shirdi",
+  "age": "22",
+  "gender": "Male",
+  "medicalHistory": [],
+  "password": "123456",
+  "email": "om5@gmail.com",
+  "firstName": "Omkar",
+  "lastName": "Aynar",
+  "reviews": [],
+  "hopitalAdd": "",
+  "hospitalName": "Ayanar Hospital",
+  "city": "Shirdi",
+  "hospitalCity": "Shirdi",
+  "hospitalPincode": "456892",
+  "hospitalState": "Maharashtra",
+  "pincode": "456892",
+  "state": "Maharashtra",
+  "speciality": "Surgeon",
+  "phoneNo": "8956784324",
+  "DOB": "2001-05-20T07:23:37.000Z"
+}]

@@ -1,0 +1,15 @@
+[{
+  "_id": {
+    "$oid": "637e3976f93f984ba3da1d95"
+  },
+  "adminId": "IVNID8392",
+  "age": 34,
+  "gender": "male",
+  "password": "123456",
+  "email": "admin@gmail.com",
+  "firstName": "Abhinav",
+  "lastName": "Deshmukh",
+  "city": "Nagpur",
+  "state": "Maharashtra",
+  "phoneNo": "8657945237"
+}]

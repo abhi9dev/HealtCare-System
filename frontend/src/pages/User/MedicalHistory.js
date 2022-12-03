@@ -14,7 +14,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 // import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import { Button, TextField } from "@mui/material";
+import { Button, TextField, Rating } from "@mui/material";
 
 const columns = [
   { id: "dateVisited", label: "Date Visited", minWidth: 100 },
@@ -26,86 +26,115 @@ const columns = [
   { id: "medicines", label: "Medicines", minWidth: 150 },
   { id: "medicineFees", label: "Medicines Fees", minWidth: 80 },
   { id: "HospitalFees", label: "Hospital Fees", minWidth: 80 },
+  { id: "starRating", label: "Star Rating", minWidth: 130 },
 ];
 
 export default function MedicalHistory() {
   const [month, setMonthValue] = React.useState(0);
   const [year, setYearValue] = React.useState(0);
-  const [doctorName, setDoctorName] = React.useState("");
+  const [doctor, setDoctor] = React.useState("");
   const [responseArr, setResponseArr] = React.useState([]);
   const [filteredRows, setFilteredRows] = React.useState([]);
   const [search, setSearch] = React.useState(true);
+  const [toBeRead, setToBeRead] = React.useState(true);
+  const [value, setValue] = React.useState(0);
 
   const { id } = useParams();
   // console.log(doctorName, month, year);
+
+  /******************************   SEARCHING FUNCTIONS STARTS     ********************************/
   const url = `http://localhost:5000/user/${id}`;
 
+  function DoctorNameHistory() {
+    axios
+      .get(`http://localhost:5000/user/${id}/search1/${doctor}`)
+      .then((res) => {
+        setFilteredRows(res.data);
+        // console.log(res.data);
+      });
+  }
+
+  function MonthHistory() {
+    axios
+      .get(`http://localhost:5000/user/${id}/search2/${month}`)
+      .then((res) => {
+        setFilteredRows(res.data);
+        // console.log(res.data);
+      });
+  }
+
+  function YearHistory() {
+    axios
+      .get(`http://localhost:5000/user/${id}/search3/${year}`)
+      .then((res) => {
+        setFilteredRows(res.data);
+        // console.log(res.data);
+      });
+  }
+
+  function DoctorMonthHistory() {
+    axios
+      .get(`http://localhost:5000/user/${id}/search1/${doctor}/${month}`)
+      .then((res) => {
+        setFilteredRows(res.data);
+        // console.log(res.data);
+      });
+  }
+
+  function MonthYearHistory() {
+    axios
+      .get(`http://localhost:5000/user/${id}/search2/${month}/${year}`)
+      .then((res) => {
+        setFilteredRows(res.data);
+        // console.log(res.data);
+      });
+  }
+
+  function YearDocHistory() {
+    axios
+      .get(`http://localhost:5000/user/${id}/search3/${year}/${doctor}`)
+      .then((res) => {
+        setFilteredRows(res.data);
+        // console.log(res.data);
+      });
+  }
+
+  function DoctorMonthYearHistory() {
+    axios
+      .get(
+        `http://localhost:5000/user/${id}/search1/${doctor}/${month}/${year}`
+      )
+      .then((res) => {
+        setFilteredRows(res.data);
+        // console.log(res.data);
+      });
+  }
+
   const searchByFilter = (e) => {
-    // e.preventDefault();
+    e.preventDefault();
     setFilteredRows([]);
 
-    //only search the value when state values are not null
-    if (doctorName !== "") {
-      if (filteredRows.length === 0) {
-        responseArr.map((row) => {
-          if (row.doctorName.toLowerCase().includes(doctorName.toLowerCase())) {
-            // console.log(row);
-            setFilteredRows((prev) => [...prev, row]);
-          }
-        });
-      } else {
-        filteredRows.map((row) => {
-          if (row.doctorName.toLowerCase().includes(doctorName.toLowerCase())) {
-            // console.log(row);
-            setFilteredRows((prev) => [...prev, row]);
-          }
-        });
-      }
-    }
-
-    if (month !== 0) {
-      if (filteredRows.length === 0) {
-        responseArr.map((row) => {
-          if (row.dateVisited.split("-")[1] == month) {
-            // console.log(row);
-            setFilteredRows((prev) => [...prev, row]);
-          }
-        });
-      } else {
-        filteredRows.map((row) => {
-          if (row.dateVisited.split("-")[1] == month) {
-            // console.log(row);
-            setFilteredRows((prev) => [...prev, row]);
-          }
-        });
-      }
-    }
-
-    if (year !== 0) {
-      if (filteredRows.length === 0) {
-        responseArr.map((row) => {
-          if (row.dateVisited.split("-")[0] == year) {
-            // console.log(row);
-            setFilteredRows((prev) => [...prev, row]);
-          }
-        });
-        console.log(filteredRows);
-      } else {
-        filteredRows.map((row) => {
-          if (row.dateVisited.split("-")[0] == year) {
-            // console.log(row);
-            setFilteredRows((prev) => [...prev, row]);
-          }
-        });
-        console.log(filteredRows);
-      }
+    if (doctor !== "" && month === 0 && year === 0) {
+      DoctorNameHistory();
+    } else if (doctor === "" && month !== 0 && year === 0) {
+      MonthHistory();
+    } else if (doctor === "" && month === 0 && year !== 0) {
+      YearHistory();
+    } else if (doctor !== "" && month !== 0 && year === 0) {
+      DoctorMonthHistory();
+    } else if (doctor === "" && month !== 0 && year !== 0) {
+      MonthYearHistory();
+    } else if (doctor !== "" && month === 0 && year !== 0) {
+      YearDocHistory();
+    } else if (doctor !== "" && month !== 0 && year !== 0) {
+      DoctorMonthYearHistory();
     }
   };
 
+  /******************************   SEARCHING FUNCTIONS ENDS     **********************************/
+
   React.useEffect(() => {
-    if (doctorName === "" && month === "" && year === "") {
-      setFilteredRows(responseArr);
-    }
+    if (doctor === "" && month === 0 && year === 0) getData();
 
     async function getData() {
       await axios
@@ -120,12 +149,21 @@ export default function MedicalHistory() {
         });
     }
 
-    try {
-      getData();
-    } catch (err) {
-      console.log(err);
-    }
-  }, [doctorName, month, year]);
+    getData();
+  }, [doctor, month, year]);
+
+  const sendRating = (doctorID) => {
+    // setToBeRead(true);
+    console.log(doctorID);
+
+    // axios
+    //   .post(`http://localhost:5000/doc/${doctorID}/rating`, {
+    //     rating: value,
+    //   })
+    //   .then((res) => {
+    //     console.log(res.data);
+    //   });
+  };
 
   return (
     <>
@@ -142,7 +180,7 @@ export default function MedicalHistory() {
               margin: "0.5rem",
             }}
             onChange={(e) => {
-              setDoctorName(e.target.value);
+              setDoctor(e.target.value);
             }}
           >
             Doctor Name
@@ -200,6 +238,49 @@ export default function MedicalHistory() {
                     <TableRow hover role="checkbox" tabIndex={-1} key={uuid()}>
                       {columns.map((column) => {
                         const value = row[column.id];
+
+                        if (column.id === "dateVisited") {
+                          var datee = new Date(value);
+                          // console.log(datee.toLocaleDateString());
+                          return (
+                            <TableCell key={column.id} align={column.align}>
+                              {column.format && typeof value === "number"
+                                ? column.format(datee.toLocaleDateString())
+                                : datee.toLocaleDateString()}
+                            </TableCell>
+                          );
+                        } else if (column.id === "starRating") {
+                          //rating not given yet
+                          if (value === undefined) {
+                            return (
+                              <TableCell key={column.id} align={column.align}>
+                                <Rating
+                                  name="Rate Doctor"
+                                  value={value}
+                                  onChange={(event, newValue) => {
+                                    setValue(newValue);
+                                  }}
+                                  onClick={(e) => {
+                                    // sendRating(row.doctorID);
+                                    console.log(row.doctorID);
+                                  }}
+                                />
+                              </TableCell>
+                            );
+                          }
+
+                          //rating already given, just showing the rating
+                          return (
+                            <TableCell key={column.id} align={column.align}>
+                              <Rating
+                                name="Rate Doctor"
+                                value={value}
+                                readOnly
+                              />
+                            </TableCell>
+                          );
+                        }
+
                         return (
                           <TableCell key={column.id} align={column.align}>
                             {column.format && typeof value === "number"

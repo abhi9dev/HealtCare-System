@@ -24,14 +24,15 @@ import { FcApprove } from "react-icons/fc";
 //import sidebar css from react-pro-sidebar module and our custom css
 import "react-pro-sidebar/dist/css/styles.css";
 import "./sideMenu.css";
+import { display } from "@mui/system";
 
 const SideMenu = () => {
   const { id } = useParams();
   const [menuCollapse, setMenuCollapse] = useState(false);
   const [homeActive, setHomeActive] = useState(false);
-  const [historyActive, setHistoryActive] = useState(false);
-  const [nearbyDocActive, setNearbyDocActive] = useState(false);
-  const [editProfActive, setEditProfActive] = useState(false);
+  const [displayClick, setDisplayClick] = useState(false);
+  const [approveClick, setApproveReqClick] = useState(false);
+  const [registerClick, setRegisterClick] = useState(false);
 
   const menuIconClick = () => {
     menuCollapse ? setMenuCollapse(false) : setMenuCollapse(true);
@@ -41,59 +42,59 @@ const SideMenu = () => {
     // e.preventDefault();
     setHomeActive(true);
 
-    if (historyActive) {
-      setHistoryActive(false);
+    if (displayClick) {
+      setDisplayClick(false);
     }
-    if (nearbyDocActive) {
-      setNearbyDocActive(false);
+    if (approveClick) {
+      setApproveReqClick(false);
     }
-    if (editProfActive) {
-      setEditProfActive(false);
+    if (registerClick) {
+      setRegisterClick(false);
     }
   };
 
-  const historyClick = (e) => {
+  const displayDataClick = (e) => {
     // e.preventDefault();
-    setHistoryActive(true);
+    setDisplayClick(true);
 
     if (homeActive) {
       setHomeActive(false);
     }
-    if (nearbyDocActive) {
-      setNearbyDocActive(false);
+    if (approveClick) {
+      setApproveReqClick(false);
     }
-    if (editProfActive) {
-      setEditProfActive(false);
+    if (registerClick) {
+      setRegisterClick(false);
     }
   };
 
-  const nearbyDocClick = (e) => {
+  const approveRequestClick = (e) => {
     // e.preventDefault();
-    setNearbyDocActive(true);
+    setApproveReqClick(true);
 
     if (homeActive) {
       setHomeActive(false);
     }
-    if (historyActive) {
-      setHistoryActive(false);
+    if (displayClick) {
+      setDisplayClick(false);
     }
-    if (editProfActive) {
-      setEditProfActive(false);
+    if (registerClick) {
+      setRegisterClick(false);
     }
   };
 
-  const editProfClick = (e) => {
+  const registerDataClick = (e) => {
     // e.preventDefault();
-    setEditProfActive(true);
+    setRegisterClick(true);
 
     if (homeActive) {
       setHomeActive(false);
     }
-    if (historyActive) {
-      setHistoryActive(false);
+    if (displayClick) {
+      setDisplayClick(false);
     }
-    if (nearbyDocActive) {
-      setNearbyDocActive(false);
+    if (approveClick) {
+      setApproveReqClick(false);
     }
   };
 
@@ -116,22 +117,22 @@ const SideMenu = () => {
                 <a href={`/admin/${id}/`}>Home</a>
               </MenuItem>
               <MenuItem
-                onClick={historyClick}
-                active={historyActive}
+                onClick={displayDataClick}
+                active={displayClick}
                 icon={<FaWpforms />}
               >
                 <a href={`/admin/${id}/displayData`}>Display Data</a>
               </MenuItem>
               <MenuItem
-                onClick={nearbyDocClick}
-                active={nearbyDocActive}
+                onClick={approveRequestClick}
+                active={approveClick}
                 icon={<FcApprove />}
               >
                 <a href={`/admin/${id}/approveRequest`}>Approve Request</a>
               </MenuItem>
               <MenuItem
-                onClick={nearbyDocClick}
-                active={nearbyDocActive}
+                onClick={registerDataClick}
+                active={registerClick}
                 icon={<AiOutlineUserAdd />}
               >
                 <a href={`/admin/${id}/registerUser`}>Register User</a>

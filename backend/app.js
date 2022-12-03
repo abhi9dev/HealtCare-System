@@ -1,7 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const { MongoClient } = require("mongodb");
-const mongoose = require("mongoose");
+// const mongoose = require("mongoose");
 const cors = require("cors");
 const { request } = require("express");
 
@@ -16,6 +16,7 @@ const app = express();
 // app.use(customMiddelware);
 
 // Implement Body Parser
+
 app.use(
   bodyParser.urlencoded({
     extended: false,
@@ -23,6 +24,15 @@ app.use(
 );
 app.use(bodyParser.json());
 app.use(cors());
+app.use(function (err, req, res, next) {
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get("env") === "development" ? err : {};
+
+  // render the error page
+  res.status(err.status || 500);
+  res.render("error");
+});
 
 app.use(function (req, res, next) {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -55,7 +65,7 @@ app.get("/user", (req, res) => {
   getData();
 });
 
-app.get(`/user/:id`, (req, res) => {
+app.get("/user/:id", (req, res) => {
   async function getUserData() {
     await client.connect();
     const db = client.db(dbName);
@@ -70,88 +80,6 @@ app.get(`/user/:id`, (req, res) => {
   }
 
   getUserData();
-});
-
-app.get("/doc", (req, res) => {
-  async function getDocData() {
-    // Use connect method to connect to the server
-    await client.connect();
-    console.log("Connected successfully to server");
-    const db = client.db(dbName);
-    const collection = db.collection("doctorData");
-
-    var findResult = await collection.find({}).toArray();
-    // console.log(findResult);
-    res.send(findResult);
-  }
-
-  getDocData();
-});
-
-app.get("/doc/:id", (req, res) => {
-  // console.log(req.params.id);
-  async function getDoctorData() {
-    await client.connect();
-    const db = client.db(dbName);
-    const collection = db.collection("doctorData");
-
-    var findResult = await collection
-      .find({ healthID: req.params.id })
-      .toArray();
-    // console.log(findResult);
-
-    res.send(findResult[0]);
-  }
-
-  getDoctorData();
-});
-
-app.get("/doc/search/:speciality?/:city?/:pin?", (req, res) => {
-  var spec = req.params.speciality;
-  var city = req.params.city;
-  var pin = req.params.pin;
-
-  if (spec === undefined) spec = "";
-  if (city === undefined) city = "";
-  if (pin === undefined) pin = "";
-
-  console.log(spec, city, pin);
-
-  async function searchDoctors() {
-    await client.connect();
-    const db = client.db(dbName);
-    const collection = db.collection("doctorData");
-
-    var findResult = await collection
-      .find({
-        speciality: spec,
-        hospitalCity: city,
-        hospitalPincode: pin,
-      })
-      .toArray();
-
-    // console.log(findResult);
-
-    res.send(findResult);
-  }
-
-  searchDoctors();
-});
-
-app.get("/admin", (req, res) => {
-  async function getAdminData() {
-    // Use connect method to connect to the server
-    await client.connect();
-    console.log("Connected successfully to server");
-    const db = client.db(dbName);
-    const collection = db.collection("adminData");
-
-    var findResult = await collection.find({}).toArray();
-    // console.log(findResult);
-    res.send(findResult);
-  }
-
-  getAdminData();
 });
 
 app.post("/user", (req, res) => {
@@ -195,6 +123,481 @@ app.post("/user", (req, res) => {
   }
 
   registerUser();
+});
+
+app.patch("/user/:id", (req, res) => {
+  const dataa = req.body;
+  // console.log(dataa);
+
+  async function updateData() {
+    // Use connect method to connect to the server
+    await client.connect();
+    const db = client.db(dbName);
+    const collection = db.collection("userData");
+
+    await collection.updateOne(
+      { healthID: req.params.id },
+      { $push: { medicalHistory: dataa } }
+    );
+  }
+
+  updateData();
+});
+
+/**                                     MEDICAL HISTORY SEARCH BEGINS...                            **/
+
+/****************************MEDICAL HISTORY SEARCH WITH ONE PARAMETER********************************* */
+
+app.get("/user/:id/search1/:doc", (req, res) => {
+  var doc = req.params.doc;
+
+  async function getUserData() {
+    await client.connect();
+    const db = client.db(dbName);
+    const collection = db.collection("userData");
+
+    var findResult = await collection
+      .find({
+        healthID: req.params.id,
+      })
+      .toArray();
+    // console.log(findResult);
+
+    var anss = [];
+    findResult[0].medicalHistory.map((item) => {
+      if (item.doctorName.includes(doc)) {
+        anss = [...anss, item];
+      }
+    });
+
+    res.send(anss);
+  }
+
+  getUserData();
+});
+
+app.get("/user/:id/search2/:month", (req, res) => {
+  var month = req.params.month;
+  parseInt(month);
+
+  async function getUserData() {
+    await client.connect();
+    const db = client.db(dbName);
+    const collection = db.collection("userData");
+
+    var findResult = await collection
+      .find({
+        healthID: req.params.id,
+      })
+      .toArray();
+    // console.log(findResult);
+
+    var anss = [];
+    findResult[0].medicalHistory.map((item) => {
+      var datee = new Date(item.dateVisited);
+      if (datee.getMonth() + 1 == month) {
+        anss = [...anss, item];
+      }
+    });
+
+    res.send(anss);
+  }
+
+  getUserData();
+});
+
+app.get("/user/:id/search3/:year", (req, res) => {
+  var year = req.params.year;
+  parseInt(year);
+
+  async function getUserData() {
+    await client.connect();
+    const db = client.db(dbName);
+    const collection = db.collection("userData");
+
+    var findResult = await collection
+      .find({
+        healthID: req.params.id,
+      })
+      .toArray();
+    // console.log(findResult);
+
+    var anss = [];
+    findResult[0].medicalHistory.map((item) => {
+      var datee = new Date(item.dateVisited);
+      if (datee.getFullYear() == year) {
+        anss = [...anss, item];
+      }
+    });
+
+    res.send(anss);
+  }
+
+  getUserData();
+});
+
+/****************************MEDICAL HISTORY SEARCH WITH TWO PARAMETER********************************* */
+app.get("/user/:id/search1/:doc/:month", (req, res) => {
+  var doc = req.params.doc;
+  var month = req.params.month;
+  parseInt(month);
+
+  async function getUserData() {
+    await client.connect();
+    const db = client.db(dbName);
+    const collection = db.collection("userData");
+
+    var findResult = await collection
+      .find({
+        healthID: req.params.id,
+      })
+      .toArray();
+    // console.log(findResult);
+
+    var anss = [];
+    findResult[0].medicalHistory.map((item) => {
+      var datee = new Date(item.dateVisited);
+      if (item.doctorName.includes(doc) && datee.getMonth() + 1 == month) {
+        anss = [...anss, item];
+      }
+    });
+
+    res.send(anss);
+  }
+
+  getUserData();
+});
+
+app.get("/user/:id/search2/:month/:year", (req, res) => {
+  var year = req.params.year;
+  var month = req.params.month;
+  parseInt(month);
+  parseInt(year);
+
+  async function getUserData() {
+    await client.connect();
+    const db = client.db(dbName);
+    const collection = db.collection("userData");
+
+    var findResult = await collection
+      .find({
+        healthID: req.params.id,
+      })
+      .toArray();
+    // console.log(findResult);
+
+    var anss = [];
+    findResult[0].medicalHistory.map((item) => {
+      var datee = new Date(item.dateVisited);
+      if (datee.getFullYear() == year && datee.getMonth() + 1 == month) {
+        anss = [...anss, item];
+      }
+    });
+
+    res.send(anss);
+  }
+
+  getUserData();
+});
+
+app.get("/user/:id/search3/:year/:doc", (req, res) => {
+  var year = req.params.year;
+  var doc = req.params.doc;
+  parseInt(year);
+
+  async function getUserData() {
+    await client.connect();
+    const db = client.db(dbName);
+    const collection = db.collection("userData");
+
+    var findResult = await collection
+      .find({
+        healthID: req.params.id,
+      })
+      .toArray();
+    // console.log(findResult);
+
+    var anss = [];
+    findResult[0].medicalHistory.map((item) => {
+      var datee = new Date(item.dateVisited);
+      if (datee.getFullYear() == year && item.doctorName.includes(doc)) {
+        anss = [...anss, item];
+      }
+    });
+
+    res.send(anss);
+  }
+
+  getUserData();
+});
+
+/****************************MEDICAL HISTORY SEARCH WITH THREE PARAMETER********************************* */
+
+app.get("/user/:id/search1/:doc/:month/:year", (req, res) => {
+  var year = req.params.year;
+  var month = req.params.month;
+  var doc = req.params.doc;
+  parseInt(year);
+  parseInt(month);
+
+  async function getUserData() {
+    await client.connect();
+    const db = client.db(dbName);
+    const collection = db.collection("userData");
+
+    var findResult = await collection
+      .find({
+        healthID: req.params.id,
+      })
+      .toArray();
+    // console.log(findResult);
+
+    var anss = [];
+    findResult[0].medicalHistory.map((item) => {
+      var datee = new Date(item.dateVisited);
+      if (
+        item.doctorName.includes(doc) &&
+        datee.getMonth() + 1 == month &&
+        datee.getFullYear() == year
+      ) {
+        anss = [...anss, item];
+      }
+    });
+
+    res.send(anss);
+  }
+
+  getUserData();
+});
+
+/**                                 MEDICAL HISTORY SEARCH ENDS...                            **/
+
+/**                                     DOCTOR SEARCH BEGINS...                            **/
+
+/****************************DOCTOR SEARCH WITH ONE PARAMETER********************************* */
+app.get("/doc/search1/:speciality", (req, res) => {
+  var spec = req.params.speciality;
+  // var city = req.params.city;
+  // var pin = req.params.pin;
+
+  // console.log(spec, city, pin);
+
+  async function searchDoctors() {
+    await client.connect();
+    const db = client.db(dbName);
+    const collection = db.collection("doctorData");
+
+    var findResult = await collection
+      .find({
+        speciality: spec,
+      })
+      .toArray();
+
+    // console.log(findResult);
+    res.send(findResult);
+  }
+
+  searchDoctors();
+});
+
+app.get("/doc/search2/:pin", (req, res) => {
+  // var spec = req.params.speciality;
+  // var city = req.params.city;
+  var pin = req.params.pin;
+  pin.toString();
+
+  // console.log(spec, city, pin);
+
+  async function searchDoctors() {
+    await client.connect();
+    const db = client.db(dbName);
+    const collection = db.collection("doctorData");
+
+    var findResult = await collection
+      .find({
+        hospitalPincode: pin,
+      })
+      .toArray();
+
+    // console.log(findResult);
+    res.send(findResult);
+  }
+
+  searchDoctors();
+});
+
+app.get("/doc/search3/:city", (req, res) => {
+  // var spec = req.params.speciality;
+  var city = req.params.city;
+  // var pin = req.params.pin;
+
+  // pin.toString();
+
+  // console.log(spec, city, pin);
+
+  async function searchDoctors() {
+    await client.connect();
+    const db = client.db(dbName);
+    const collection = db.collection("doctorData");
+
+    var findResult = await collection
+      .find({
+        hospitalCity: city,
+      })
+      .toArray();
+
+    // console.log(findResult);
+    res.send(findResult);
+  }
+
+  searchDoctors();
+});
+
+/****************************DOCTOR SEARCH WITH TWO PARAMETER********************************* */
+app.get("/doc/search1/:speciality/:pin", (req, res) => {
+  var spec = req.params.speciality;
+  // var city = req.params.city;
+  var pin = req.params.pin;
+
+  if (spec === undefined) spec = "";
+  // if (city === undefined) city = "";
+  if (pin === undefined) pin = "";
+
+  pin.toString();
+
+  // console.log(spec, city, pin);
+
+  async function searchDoctors() {
+    await client.connect();
+    const db = client.db(dbName);
+    const collection = db.collection("doctorData");
+
+    var findResult = await collection
+      .find({
+        speciality: spec,
+        hospitalPincode: pin,
+      })
+      .toArray();
+
+    // console.log(findResult);
+    res.send(findResult);
+  }
+
+  searchDoctors();
+});
+
+app.get("/doc/search2/:pin/:city", (req, res) => {
+  // var spec = req.params.speciality;
+  var city = req.params.city;
+  var pin = req.params.pin;
+
+  pin.toString();
+
+  // console.log(spec, city, pin);
+
+  async function PinCityDoctor() {
+    await client.connect();
+    const db = client.db(dbName);
+    const collection = db.collection("doctorData");
+
+    var findResult = await collection
+      .find({
+        // speciality: spec,
+        hospitalCity: city,
+        hospitalPincode: pin,
+      })
+      .toArray();
+
+    // console.log(findResult);
+    res.send(findResult);
+  }
+
+  PinCityDoctor();
+});
+
+app.get("/doc/search3/:speciality/:city", (req, res) => {
+  var spec = req.params.speciality;
+  var city = req.params.city;
+  // var pin = req.params.pin;
+
+  if (spec === undefined) spec = "";
+  if (city === undefined) city = "";
+  // if (pin === undefined) pin = "";
+
+  // pin.toString();
+
+  // console.log(spec, city, pin);
+
+  async function searchDoctors() {
+    await client.connect();
+    const db = client.db(dbName);
+    const collection = db.collection("doctorData");
+
+    var findResult = await collection
+      .find({
+        speciality: spec,
+        // hospitalPincode: pin,
+        hospitalCity: city,
+      })
+      .toArray();
+
+    // console.log(findResult);
+    res.send(findResult);
+  }
+
+  searchDoctors();
+});
+
+/****************************DOCTOR SEARCH WITH THREE PARAMETER********************************* */
+app.get("/doc/search1/:speciality/:city/:pin", (req, res) => {
+  var spec = req.params.speciality;
+  var city = req.params.city;
+  var pin = req.params.pin;
+
+  if (spec === undefined) spec = "";
+  if (city === undefined) city = "";
+  if (pin === undefined) pin = "";
+
+  pin.toString();
+
+  // console.log(spec, city, pin);
+
+  async function searchDoctors() {
+    await client.connect();
+    const db = client.db(dbName);
+    const collection = db.collection("doctorData");
+
+    var findResult = await collection
+      .find({
+        speciality: spec,
+        hospitalPincode: pin,
+        hospitalCity: city,
+      })
+      .toArray();
+
+    // console.log(findResult);
+    res.send(findResult);
+  }
+
+  searchDoctors();
+});
+
+/**                                     DOCTOR SEARCH ENDS...                            **/
+
+app.get("/doc", (req, res) => {
+  async function getData() {
+    // Use connect method to connect to the server
+    await client.connect();
+    console.log("Connected successfully to server");
+    const db = client.db(dbName);
+    const collection = db.collection("doctorData");
+
+    var findResult = await collection.find({}).toArray();
+    // console.log(findResult);
+    res.send(findResult);
+  }
+
+  getData();
 });
 
 app.post("/doc", (req, res) => {
@@ -251,6 +654,23 @@ app.post("/doc", (req, res) => {
   }
 
   registerDoctor();
+});
+
+
+app.get("/admin", (req, res) => {
+  async function getAdminData() {
+    // Use connect method to connect to the server
+    await client.connect();
+    console.log("Connected successfully to server");
+    const db = client.db(dbName);
+    const collection = db.collection("adminData");
+
+    var findResult = await collection.find({}).toArray();
+    // console.log(findResult);
+    res.send(findResult);
+  }
+
+  getAdminData();
 });
 
 app.post("/admin/editProfile", (req, res) => {
@@ -357,33 +777,29 @@ app.get("/admin/editProfile", (req, res) => {
   getToBeUpdatedData();
 });
 
-app.patch("/user/:id", (req, res) => {
-  const dataa = req.body;
-  // console.log(dataa);
+app.get("/admin/graphData/:disease?/:year?", (req, res) => {
+  var disease = req.params.disease;
+  var year = req.params.year;
 
-  async function updateData() {
-    // Use connect method to connect to the server
+  console.log(disease, year);
+
+  async function getGraphData() {
     await client.connect();
     const db = client.db(dbName);
-    const collection = db.collection("userData");
+    const collection = db.collection("GraphData");
 
-    await collection.updateOne(
-      { healthID: req.params.id },
-      { $push: { medicalHistory: dataa } }
-    );
+    var result = await collection
+      .find({
+        $where: function () {
+          return Disease == disease && YYYY == year;
+        },
+      })
+      .toArray();
+
+    res.send(result);
   }
 
-  updateData();
-});
-
-app.use(function (err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get("env") === "development" ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render("error");
+  getGraphData();
 });
 
 const PORT = process.env.PORT || 5000;

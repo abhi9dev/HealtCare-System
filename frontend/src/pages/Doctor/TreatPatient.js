@@ -80,6 +80,7 @@ export default function MedicalHistory() {
   const postTreatmentData = () => {
     var obj = {
       dateVisited: Date(),
+      doctorID: doctorData.doctorID,
       doctorName: `${doctorData.firstName} ${doctorData.lastName}`,
       hospitalName: doctorData.hospitalName,
       hospitalAddress: doctorData.hospitalAddress,
@@ -168,6 +169,19 @@ export default function MedicalHistory() {
                     >
                       {columns.map((column) => {
                         const value = row[column.id];
+
+                        if (column.id === "dateVisited") {
+                          var datee = new Date(value);
+                          // console.log(datee.toLocaleDateString());
+                          return (
+                            <TableCell key={column.id} align={column.align}>
+                              {column.format && typeof value === "number"
+                                ? column.format(datee.toLocaleDateString())
+                                : datee.toLocaleDateString()}
+                            </TableCell>
+                          );
+                        }
+
                         return (
                           <TableCell key={column.id} align={column.align}>
                             {column.format && typeof value === "number"

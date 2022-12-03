@@ -15,6 +15,7 @@ import {
 
 import SideMenu from "./SideMenu";
 import axios from "axios";
+import { v4 as uuid } from "uuid";
 
 const columns = [
   { id: "id", label: "HealthID", minWidth: 100 },
@@ -23,6 +24,7 @@ const columns = [
   { id: "phone", label: "Phone Number", minWidth: 100 },
   { id: "email", label: "Email", minWidth: 120 },
   { id: "address", label: "Address", minWidth: 120 },
+  { id: "specialization", label: "Specialization", minWidth: 120 },
   { id: "approval", label: "Approval", minWidth: 100 },
   { id: "denied", label: "Deny", minWidth: 100 },
 ];
@@ -52,7 +54,7 @@ export default function ApproveRequest() {
   const url = `http://localhost:5000/user/${healthID}`;
 
   const searchData = async (e) => {
-    e.preventDefault();
+    // e.preventDefault();
 
     await axios.get(url).then((res) => {
       setUserData(res.data);
@@ -62,7 +64,7 @@ export default function ApproveRequest() {
 
   //approve the request and change the data in the database
   const ApproveRequest = (e, id) => {
-    e.preventDefault();
+    // e.preventDefault();
     // setApprovedd(true);
 
     var objj = {
@@ -72,6 +74,7 @@ export default function ApproveRequest() {
       phone: "",
       email: "",
       address: "",
+      specialization: "",
     };
 
     toBeUpdate.map((item) => {
@@ -81,23 +84,22 @@ export default function ApproveRequest() {
         objj.phone = item.phone;
         objj.email = item.email;
         objj.address = item.address;
+        if (item.specialization !== undefined)
+          objj.specialization = item.specialization;
       }
     });
     // console.log(objj);
 
-    axios
-      .patch(`http://localhost:5000/admin/editProfile/${id}`, objj)
-      .then((res) => {
-        console.log(res.data);
-      });
+    axios.patch(`http://localhost:5000/admin/editProfile/${id}`, objj);
 
-    //delete the data from toBeUpdate database
     axios.delete(`http://localhost:5000/admin/editProfile/delete/${id}`);
   };
 
   const DeleteRequest = (e, id) => {
-    e.preventDefault();
+    // e.preventDefault();
+
     // setDeniedd(true);
+    console.log(id);
     axios.delete(`http://localhost:5000/admin/editProfile/delete/${id}`);
   };
 
@@ -135,14 +137,14 @@ export default function ApproveRequest() {
                   setHealthID(e.target.value);
                 }}
               ></BButton>
-              <BBButton variant="contained" onClick={searchData}>
+              <BBButton variant="contained" onClick={(e) => searchData(e)}>
                 Submit
               </BBButton>
             </Search>
           </SearchPart>
           <DisplayPart>
             {/* 1st table for displaying non-medical data */}
-            <Paperr elevation={10} sx={{ minWidth: "40%", overflow: "hidden" }}>
+            <Paperr elevation={10} sx={{ minWidth: 500, overflow: "hidden" }}>
               <TableContainer sx={{ maxHeight: 800, minWidth: 800 }}>
                 <Table stickyHeader aria-label="sticky table">
                   <TableHead>
@@ -151,7 +153,7 @@ export default function ApproveRequest() {
                         <TableCell
                           key={column.id}
                           align={column.align}
-                          style={{ minWidth: column.minWidth }}
+                          sx={{ minWidth: column.minWidth }}
                         >
                           {column.label}
                         </TableCell>
@@ -166,7 +168,7 @@ export default function ApproveRequest() {
                         hover
                         role="checkbox"
                         tabIndex={-1}
-                        key={userData.code}
+                        key={uuid()}
                       >
                         {columns2.map((column) => {
                           const value = userData[column.id];
@@ -174,7 +176,7 @@ export default function ApproveRequest() {
                             <TableCell
                               key={column.id}
                               align={column.align}
-                              minWidth={column.minWidth}
+                              sx={{ minWidth: column.minWidth }}
                             >
                               {column.format && typeof value === "number"
                                 ? column.format(value)
@@ -192,7 +194,7 @@ export default function ApproveRequest() {
         </Part1>
         <Part2>
           <h3>Data Change Approve Request</h3>
-          <Paper sx={{ minWidth: "70%", overflow: "hidden", marginTop: 5 }}>
+          <Paper sx={{ minWidth: 700, overflow: "hidden", marginTop: 5 }}>
             <TableContainer sx={{ maxHeight: 800, maxWidth: 1300 }}>
               <Table stickyHeader aria-label="sticky table">
                 <TableHead>
@@ -213,7 +215,7 @@ export default function ApproveRequest() {
                 <TableBody>
                   {toBeUpdate?.map((row) => {
                     return (
-                      <TableRow role="checkbox" tabIndex={-1}>
+                      <TableRow role="checkbox" tabIndex={-1} key={uuid()}>
                         {columns.map((column) => {
                           const value = row[column.id];
 
@@ -224,7 +226,7 @@ export default function ApproveRequest() {
                                 <Button
                                   align={column.align}
                                   varient="outlined"
-                                  onClick={ApproveRequest(row.id)}
+                                  onClick={(e) => ApproveRequest(e, row.id)}
                                 >
                                   Approve
                                 </Button>
@@ -239,7 +241,7 @@ export default function ApproveRequest() {
                                 <Button
                                   varient="outlined"
                                   color="warning"
-                                  onClick={DeleteRequest(row.id)}
+                                  onClick={(e) => DeleteRequest(e, row.id)}
                                 >
                                   Deny
                                 </Button>
