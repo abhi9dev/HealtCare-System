@@ -33,8 +33,8 @@ const EditProfile = (props) => {
   const [userData, setUserData] = useState("");
   const { id } = useParams();
 
-  const url = `http://localhost:5000/user/${id}`;
-  const url1 = `http://localhost:5000/admin/editProfile`;
+  var url = `http://localhost:5000/user/${id}`;
+  var url1 = `http://localhost:5000/admin/editProfile`;
 
   const validateForm = () => {
     return (

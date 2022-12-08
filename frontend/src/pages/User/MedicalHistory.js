@@ -24,8 +24,8 @@ const columns = [
   { id: "disease", label: "Disease", minWidth: 120 },
   { id: "symptoms", label: "Symptoms", minWidth: 150 },
   { id: "medicines", label: "Medicines", minWidth: 150 },
-  { id: "medicineFees", label: "Medicines Fees", minWidth: 80 },
-  { id: "consultationFees", label: "Hospital Fees", minWidth: 80 },
+  { id: "medicineFees", label: "Medicine Fees", minWidth: 80 },
+  { id: "hospitalFees", label: "Hospital Fees", minWidth: 80 },
   { id: "starReview", label: "Star Rating", minWidth: 130 },
 ];
 
@@ -153,7 +153,7 @@ export default function MedicalHistory() {
 
   const sendRating = (doctorID, starValue, dateVisited) => {
     setToBeRead(true);
-    console.log(doctorID);
+    // console.log(doctorID);
 
     //update the rating in the doctor reivews arrays for settings the rating
     axios
@@ -266,7 +266,7 @@ export default function MedicalHistory() {
                         } else if (column.id === "starReview") {
                           //rating not given yet
                           console.log(value);
-                          if (value === 0) {
+                          if (value === undefined) {
                             return (
                               <TableCell key={column.id} align={column.align}>
                                 <Rating

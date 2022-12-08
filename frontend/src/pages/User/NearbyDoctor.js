@@ -37,7 +37,7 @@ export default function NearbyDoctor() {
         .get(`http://localhost:5000/doc/search2/${res.data.pincode}`)
         .then((res) => {
           setFilteredRows(res.data);
-          // console.log(res.data);
+          console.log(res.data);
         });
     });
   }
@@ -224,14 +224,6 @@ const DisplayInfo = styled.div`
   min-width: 60%;
   overflow-y: scroll;
   margin-left: 30%;
-`;
-
-const GoogleMaps = styled.div`
-  display: flex;
-  flex-direction: column;
-  border: 1px solid black;
-  max-height: 35rem;
-  min-width: 40%;
 `;
 
 /*

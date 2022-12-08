@@ -11,7 +11,7 @@ const IdCardFront = (props) => {
         <img src={props.maleAvatar} alt="avatar" />
       </Avatar>
       <h3>{props.name}</h3>
-      <h6>DOB: {props.dob}</h6>
+      <h6>DOB: {new Date(props.dob).toLocaleDateString()}</h6>
       <h6>
         {props.city}, {props.state}
       </h6>

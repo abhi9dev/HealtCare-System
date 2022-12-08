@@ -144,7 +144,7 @@ export default function RegisterUser() {
   const url1 = "http://localhost:5000/doc";
 
   const submitHandler = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
 
     //axios push data in user database
     if (user) {

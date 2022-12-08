@@ -47,6 +47,7 @@ const AdminDashboard = () => {
 
   useEffect(() => {
     var url = `http://localhost:5000/admin/graphData/${disease}/${year}`;
+    // console.log(typeof disease, typeof year);
 
     async function getGraphData() {
       await axios.get(url).then((res) => {
@@ -69,32 +70,39 @@ const AdminDashboard = () => {
         ]);
 
         res.data.map((item) => {
-          if (item.MM === 1) {
-            return setPatientCount([(patientCount[0].Patients += 1)]);
-          } else if (item.MM === 2) {
-            return setPatientCount([(patientCount[1].Patients += 1)]);
-          } else if (item.MM === 3) {
-            return setPatientCount([(patientCount[2].Patients += 1)]);
-          } else if (item.MM === 4) {
-            return setPatientCount([(patientCount[3].Patients += 1)]);
-          } else if (item.MM === 5) {
-            return setPatientCount([(patientCount[4].Patients += 1)]);
-          } else if (item.MM === 6) {
-            return setPatientCount([(patientCount[5].Patients += 1)]);
-          } else if (item.MM === 7) {
-            return setPatientCount([(patientCount[6].Patients += 1)]);
-          } else if (item.MM === 8) {
-            return setPatientCount([(patientCount[7].Patients += 1)]);
-          } else if (item.MM === 9) {
-            return setPatientCount([(patientCount[8].Patients += 1)]);
-          } else if (item.MM === 10) {
-            return setPatientCount([(patientCount[9].Patients += 1)]);
-          } else if (item.MM === 11) {
-            return setPatientCount([(patientCount[10].Patients += 1)]);
-          }
+          var month = item.MM;
+          // console.log(item);
 
-          //last case i.e for December Month
-          return setPatientCount([(patientCount[11].Patients += 1)]);
+          setPatientCount((curr) =>
+            curr.map((obj) => {
+              if (obj.Month === "Jan" && month === 1) {
+                return { ...obj, Patients: obj.Patients + 1 };
+              } else if (obj.Month === "Feb" && month === 2) {
+                return { ...obj, Patients: obj.Patients + 1 };
+              } else if (obj.Month === "Mar" && month === 3) {
+                return { ...obj, Patients: obj.Patients + 1 };
+              } else if (obj.Month === "Apr" && month === 4) {
+                return { ...obj, Patients: obj.Patients + 1 };
+              } else if (obj.Month === "May" && month === 5) {
+                return { ...obj, Patients: obj.Patients + 1 };
+              } else if (obj.Month === "June" && month === 6) {
+                return { ...obj, Patients: obj.Patients + 1 };
+              } else if (obj.Month === "Jul" && month === 7) {
+                return { ...obj, Patients: obj.Patients + 1 };
+              } else if (obj.Month === "Aug" && month === 8) {
+                return { ...obj, Patients: obj.Patients + 1 };
+              } else if (obj.Month === "Spet" && month === 9) {
+                return { ...obj, Patients: obj.Patients + 1 };
+              } else if (obj.Month === "Oct" && month === 10) {
+                return { ...obj, Patients: obj.Patients + 1 };
+              } else if (obj.Month === "Nov" && month === 11) {
+                return { ...obj, Patients: obj.Patients + 1 };
+              } else if (obj.Month === "Dec" && month === 12) {
+                return { ...obj, Patients: obj.Patients + 1 };
+              }
+              return obj;
+            })
+          );
         });
       });
 

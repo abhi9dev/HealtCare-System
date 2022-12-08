@@ -32,7 +32,7 @@ const EditProfile = (props) => {
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
   const [specialization, setSpecialization] = useState("");
-  const [doctorData, setDoctorData] = useState();
+  const [doctorData, setDoctorData] = useState({});
 
   const url = `http://localhost:5000/doc/${id}`;
   const url1 = `http://localhost:5000/admin/editProfile`;
@@ -57,7 +57,10 @@ const EditProfile = (props) => {
 
   useEffect(() => {
     async function getDoctorData() {
-      await axios.get(url).then((res) => setDoctorData(res.data));
+      await axios.get(url).then((res) => {
+        setDoctorData(res.data);
+        // console.log(res.data);
+      });
     }
 
     getDoctorData();
@@ -77,6 +80,7 @@ const EditProfile = (props) => {
   return (
     <>
       <SideMenu />
+      {/* {console.log(doctorData)} */}
       <Paperr elevation={3}>
         <AppBar sx={{ zIndex: -1 }}>
           <h1>EditProfile</h1>
@@ -84,6 +88,7 @@ const EditProfile = (props) => {
         <FormControl>
           <TextField
             sx={{ minWdith: 350, marginTop: 3, marginBottom: 5 }}
+            placeholder={doctorData.firstName}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -101,6 +106,7 @@ const EditProfile = (props) => {
           />
           <TextField
             sx={{ marginBottom: 5 }}
+            placeholder={doctorData.lastName}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -117,6 +123,7 @@ const EditProfile = (props) => {
           />
           <TextField
             sx={{ marginBottom: 5 }}
+            placeholder={doctorData.PhoneNo}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -133,6 +140,7 @@ const EditProfile = (props) => {
           />
           <TextField
             sx={{ marginBottom: 5 }}
+            placeholder={doctorData.email}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -149,6 +157,7 @@ const EditProfile = (props) => {
           />
           <TextField
             sx={{ minWidth: 300, marginBottom: 5 }}
+            placeholder={doctorData.address}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -166,6 +175,7 @@ const EditProfile = (props) => {
           />
           <TextField
             sx={{ minWidth: 300, marginBottom: 5 }}
+            placeholder={doctorData.speciality}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">

@@ -241,6 +241,7 @@ app.get("/user/:id/search2/:month", (req, res) => {
 
 app.get("/user/:id/search3/:year", (req, res) => {
   var year = req.params.year;
+  // console.log(typeof year);
   parseInt(year);
 
   async function getUserData() {
@@ -690,17 +691,42 @@ app.post("/doc", (req, res) => {
     DOB: dataa.dob,
   };
 
+  var doctorUserData = {
+    healthID: healthID,
+    doctorID: doctorID,
+    address: dataa.address,
+    age: dataa.age,
+    gender: dataa.gender,
+    medicalHistory: [],
+    password: dataa.password,
+    email: dataa.email,
+    firstName: dataa.firstName,
+    lastName: dataa.lastName,
+    city: dataa.city,
+    pincode: dataa.pincode,
+    state: dataa.sstate,
+    phoneNo: dataa.phone,
+    DOB: dataa.dob,
+  };
+
   // console.log(healthID);
 
   async function registerDoctor() {
     await client.connect();
     const db = client.db(dbName);
     const collection = db.collection("doctorData");
+    const collection1 = db.collection("userData");
 
     if (await collection.findOne({ healthID: healthID })) {
       console.log("ID alread exists!");
     } else {
       await collection.insertOne(dataToUpload);
+    }
+
+    if (await collection1.findOne({ healthID: healthID })) {
+      console.log("ID alread exists!");
+    } else {
+      await collection1.insertOne(doctorUserData);
     }
   }
 
@@ -848,11 +874,11 @@ app.get("/admin/editProfile", (req, res) => {
   getToBeUpdatedData();
 });
 
-app.get("/admin/graphData/:disease?/:year?", (req, res) => {
+app.get("/admin/graphData/:disease/:year", (req, res) => {
   var disease = req.params.disease;
-  var year = req.params.year;
+  var year = parseInt(req.params.year);
 
-  console.log(disease, year);
+  console.log(typeof disease, typeof year);
 
   async function getGraphData() {
     await client.connect();
@@ -861,9 +887,8 @@ app.get("/admin/graphData/:disease?/:year?", (req, res) => {
 
     var result = await collection
       .find({
-        $where: function () {
-          return Disease == disease && YYYY == year;
-        },
+        Diseases: disease,
+        YYYY: year,
       })
       .toArray();
 

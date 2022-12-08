@@ -13,12 +13,15 @@ const DoctorDashboard = (props) => {
   const { id } = useParams();
   const [authenticated, setAuthenticated] = React.useState(null);
   const [doctorData, setDoctorData] = React.useState({});
-  const [oneRate, setOneRate] = React.useState(0);
-  const [twoRate, setTwoRate] = React.useState(0);
-  const [threeRate, setThreeRate] = React.useState(0);
-  const [fourRate, setFourRate] = React.useState(0);
-  const [fiveRate, setFiveRate] = React.useState(0);
   const [totalRating, setTotalRating] = React.useState(0);
+
+  var [rating, setRating] = React.useState([
+    { star: "one", value: 0 },
+    { star: "two", value: 0 },
+    { star: "three", value: 0 },
+    { star: "four", value: 0 },
+    { star: "five", value: 0 },
+  ]);
 
   React.useEffect(() => {
     const loggedInUser = localStorage.getItem("authenticated");
@@ -33,32 +36,31 @@ const DoctorDashboard = (props) => {
           var ratingg = review.starReview;
           setTotalRating(res.data.reviews.length);
 
-          if (ratingg == 1) {
-            setOneRate(oneRate + 1);
-          } else if (ratingg == 2) {
-            setTwoRate(twoRate + 1);
-          } else if (ratingg == 3) {
-            setThreeRate(threeRate + 1);
-          } else if (ratingg == 4) {
-            setFourRate(fourRate + 1);
-          } else if (ratingg == 5) {
-            setFiveRate(fiveRate + 1);
-          }
+          setRating((curr) =>
+            curr.map((item) => {
+              if (item.star === "one" && ratingg === 1) {
+                return { ...item, value: item.value + 1 };
+              } else if (item.star === "two" && ratingg === 2) {
+                return { ...item, value: item.value + 1 };
+              } else if (item.star === "three" && ratingg === 3) {
+                return { ...item, value: item.value + 1 };
+              } else if (item.star === "four" && ratingg === 4) {
+                return { ...item, value: item.value + 1 };
+              } else if (item.star === "five" && ratingg === 5) {
+                return { ...item, value: item.value + 1 };
+              }
+              return item;
+            })
+          );
         });
+
+        console.log(rating);
       });
     }
 
     if (loggedInUser) {
       setAuthenticated(loggedInUser);
       getDoctorData();
-      console.log(
-        (parseInt(oneRate) +
-          parseInt(twoRate) * 2 +
-          parseInt(threeRate) * 3 +
-          parseInt(fourRate) * 4 +
-          parseInt(fiveRate) * 5) /
-          totalRating
-      );
     }
   }, []);
 
@@ -83,24 +85,37 @@ const DoctorDashboard = (props) => {
               <Rating
                 readOnly
                 value={
-                  (parseInt(oneRate) +
-                    parseInt(twoRate) * 2 +
-                    parseInt(threeRate) * 3 +
-                    parseInt(fourRate) * 4 +
-                    parseInt(fiveRate) * 5) /
-                  totalRating
+                  (parseInt(rating[0].value) +
+                    parseInt(rating[1].value) * 2 +
+                    parseInt(rating[2].value) * 3 +
+                    parseInt(rating[3].value) * 4 +
+                    parseInt(rating[4].value) * 5) /
+                  (parseInt(rating[0].value) +
+                    parseInt(rating[1].value) +
+                    parseInt(rating[2].value) +
+                    parseInt(rating[3].value) +
+                    parseInt(rating[4].value))
                 }
                 size="large"
               />
               <p>
-                {(parseInt(oneRate) +
-                  parseInt(twoRate) * 2 +
-                  parseInt(threeRate) * 3 +
-                  parseInt(fourRate) * 4 +
-                  parseInt(fiveRate) * 5) /
-                  totalRating}{" "}
+                {(parseInt(rating[0].value) +
+                  parseInt(rating[1].value) * 2 +
+                  parseInt(rating[2].value) * 3 +
+                  parseInt(rating[3].value) * 4 +
+                  parseInt(rating[4].value) * 5) /
+                  (parseInt(rating[0].value) +
+                    parseInt(rating[1].value) +
+                    parseInt(rating[2].value) +
+                    parseInt(rating[3].value) +
+                    parseInt(rating[4].value))}{" "}
                 average rating out of{" "}
-                {oneRate + twoRate + threeRate + fourRate + fiveRate} reviews.
+                {parseInt(rating[0].value) +
+                  parseInt(rating[1].value) +
+                  parseInt(rating[2].value) +
+                  parseInt(rating[3].value) +
+                  parseInt(rating[4].value)}{" "}
+                reviews.
               </p>
             </SubPart1>
             <svg width="100" height="3">
@@ -113,11 +128,11 @@ const DoctorDashboard = (props) => {
                 <Barr
                   style={{
                     background: `linear-gradient(to right, green ${
-                      (fiveRate / totalRating) * 100
-                    }%, lightgrey ${(fiveRate / totalRating) * 100}%)`,
+                      (rating[4].value / totalRating) * 100
+                    }%, lightgrey ${(rating[4].value / totalRating) * 100}%)`,
                   }}
                 />
-                <p>{fiveRate}</p>
+                <p>{rating[4].value}</p>
               </Bar>
               {/* 4star */}
               <Bar>
@@ -125,11 +140,11 @@ const DoctorDashboard = (props) => {
                 <Barr
                   style={{
                     background: `linear-gradient(to right, lightgreen ${
-                      (fourRate / totalRating) * 100
-                    }%, lightgrey ${(fourRate / totalRating) * 100}%)`,
+                      (rating[3].value / totalRating) * 100
+                    }%, lightgrey ${(rating[3].value / totalRating) * 100}%)`,
                   }}
                 />
-                <p>{fourRate}</p>
+                <p>{rating[3].value}</p>
               </Bar>
               {/* 3star */}
               <Bar>
@@ -137,11 +152,11 @@ const DoctorDashboard = (props) => {
                 <Barr
                   style={{
                     background: `linear-gradient(to right, yellow ${
-                      (threeRate / totalRating) * 100
-                    }%, lightgrey ${(threeRate / totalRating) * 100}%)`,
+                      (rating[2].value / totalRating) * 100
+                    }%, lightgrey ${(rating[2].value / totalRating) * 100}%)`,
                   }}
                 />
-                <p>{threeRate}</p>
+                <p>{rating[2].value}</p>
               </Bar>
               {/* 2star */}
               <Bar>
@@ -149,11 +164,11 @@ const DoctorDashboard = (props) => {
                 <Barr
                   style={{
                     background: `linear-gradient(to right, orange ${
-                      (twoRate / totalRating) * 100
-                    }%, lightgrey ${(twoRate / totalRating) * 100}%)`,
+                      (rating[1].value / totalRating) * 100
+                    }%, lightgrey ${(rating[1].value / totalRating) * 100}%)`,
                   }}
                 />
-                <p>{twoRate}</p>
+                <p>{rating[1].value}</p>
               </Bar>
               {/* 1star */}
               <Bar>
@@ -161,11 +176,11 @@ const DoctorDashboard = (props) => {
                 <Barr
                   style={{
                     background: `linear-gradient(to right, red ${
-                      (oneRate / totalRating) * 100
-                    }%, lightgrey ${(oneRate / totalRating) * 100}%)`,
+                      (rating[0].value / totalRating) * 100
+                    }%, lightgrey ${(rating[0].value / totalRating) * 100}%)`,
                   }}
                 />
-                <p>{oneRate}</p>
+                <p>{rating[0].value}</p>
               </Bar>
             </SubPart2>
           </Part2>

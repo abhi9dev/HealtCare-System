@@ -194,7 +194,7 @@ export default function ApproveRequest() {
         </Part1>
         <Part2>
           <h3>Data Change Approve Request</h3>
-          <Paper sx={{ minWidth: 700, overflow: "hidden", marginTop: 5 }}>
+          <Paper sx={{ minWidth: 1200, overflow: "hidden", marginTop: 5 }}>
             <TableContainer sx={{ maxHeight: 800, maxWidth: 1300 }}>
               <Table stickyHeader aria-label="sticky table">
                 <TableHead>
@@ -282,7 +282,7 @@ const Part2 = styled.div`
   display: flex;
   flex-direction: column;
   max-width: 80%;
-  margin-left: 10%;
+  margin-left: 4%;
   margin-top: 5%;
 `;
 

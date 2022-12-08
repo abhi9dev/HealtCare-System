@@ -48,19 +48,19 @@ const columns = [
 ];
 
 export default function MedicalHistory() {
-  const { id } = useParams();
-  const [healthID, setHealthID] = useState("");
-  const [disease, setDisease] = useState("");
-  const [symptoms, setSymptoms] = useState("");
-  const [medicines, setMedicines] = useState("");
-  const [medicineFees, setMedicineFees] = useState(0);
-  const [consultationFees, setConsultationFees] = useState(0);
-  const [prescriptionNote, setPrescriptionNote] = useState("");
-  const [medicalData, setMedicalData] = useState([]);
-  const [doctorData, setDoctorData] = useState({});
+  var { id } = useParams();
+  var [healthID, setHealthID] = useState("");
+  var [disease, setDisease] = useState("");
+  var [symptoms, setSymptoms] = useState("");
+  var [medicines, setMedicines] = useState("");
+  var [medicineFees, setMedicineFees] = useState(0);
+  var [consultationFees, setConsultationFees] = useState(0);
+  var [prescriptionNote, setPrescriptionNote] = useState("");
+  var [medicalData, setMedicalData] = useState([]);
+  var [doctorData, setDoctorData] = useState({});
 
-  const url = `http://localhost:5000/user/${healthID}`;
-  const url1 = `http://localhost:5000/doc/${id}`;
+  var url = `http://localhost:5000/user/${healthID}`;
+  var url1 = `http://localhost:5000/doc/${id}`;
 
   useEffect(() => {
     axios.get(url1).then((res) => {
@@ -84,7 +84,7 @@ export default function MedicalHistory() {
       doctorID: doctorData.doctorID,
       doctorName: `${doctorData.firstName} ${doctorData.lastName}`,
       hospitalName: doctorData.hospitalName,
-      hospitalAddress: doctorData.hospitalAddress,
+      hospitalAddress: doctorData.hopitalAdd,
       disease: disease,
       symptoms: symptoms,
       medicines: medicines,
@@ -116,7 +116,7 @@ export default function MedicalHistory() {
   };
 
   const handleSubmit = (event) => {
-    event.preventDefault();
+    // event.preventDefault();
 
     postTreatmentData();
   };
@@ -135,7 +135,7 @@ export default function MedicalHistory() {
               setHealthID(e.target.value);
             }}
           ></BButton>
-          <BBButton variant="contained" onClick={searchData}>
+          <BBButton variant="contained" type="button" onClick={searchData}>
             Submit
           </BBButton>
         </Search>
