@@ -10,23 +10,52 @@
     {
       "dateVisited": {
         "$date": {
-          "$numberLong": "1628533800000"
+          "$numberLong": "1633804200000"
         }
       },
-      "doctorName": "Mr. Ambale",
-      "hospitalName": "Ambale Hospital",
-      "hospitalAddress": "Ambale Hospital, Godhni Road, Nagpur",
-      "disease": "Asthma",
-      "symptoms": "Difficulty in breathing , Fever , Cough",
-      "medicines": "Honitus , Air Purifer",
-      "medicineFees": 150,
-      "HospitalFees": 200,
-      "prescriptionNote": "Take a healthy Diet"
+      "doctorName": "Ashitosh Godse",
+      "hospitalName": "Godse Hospital",
+      "hospitalAddress": "Godse Hospital, Godhni Road, Nagpur",
+      "disease": "Dengue",
+      "symptoms": "Fever, Cough",
+      "medicines": "Ecalapytpus leaves juice ,Synarist",
+      "medicineFees": 100,
+      "prescriptionNote": "Take a Healthy diet, sleep more than 8 hrs",
+      "doctorID": "AGDOC3924",
+      "starReview": 3,
+      "hospitalFees": 400
+    },
+    {
+      "dateVisited": "Mon Dec 05 2022 20:01:37 GMT+0530 (India Standard Time)",
+      "doctorID": "OAef7533",
+      "doctorName": "Omkar Aynar",
+      "hospitalName": "Ayanar Hospital",
+      "disease": "Common Cold",
+      "symptoms": "Runny Nose, Fever",
+      "medicines": "Honitus, Synarist",
+      "medicineFees": "150",
+      "hospitalFees": "100",
+      "prescriptionNote": "Take rest for week, eat healthy food",
+      "starReview": 5,
+      "hospitalAddress": "Aynar Hospital, Kolhar, Shirdi"
+    },
+    {
+      "dateVisited": "Wed Dec 07 2022 14:50:35 GMT+0530 (India Standard Time)",
+      "doctorID": "AGDOC3924",
+      "doctorName": "Ashitosh Godse",
+      "hospitalName": "Godse Clinic",
+      "hospitalAddress": "Godse Clinic, Near Faras Square, Nagpur",
+      "disease": "Cold",
+      "symptoms": "Runny Nose",
+      "medicines": "Synarist",
+      "medicineFees": "100",
+      "hospitalFees": "100",
+      "prescriptionNote": "take rest, eat healthly"
     }
   ],
   "password": "123456",
   "email": "abhi@gmail.com",
-  "firstName": "Abhinav",
+  "firstName": "Abhinav ",
   "lastName": "Deshmukh",
   "city": "Nagpur",
   "state": "Maharashtra",
@@ -36,7 +65,7 @@
       "$numberLong": "1003689000000"
     }
   },
-  "phoneNo": "8895678423"
+  "phoneNo": "8895647100"
 },{
   "_id": {
     "$oid": "6378b0e2b506f8a266561495"
@@ -427,7 +456,7 @@
     "$oid": "637f789517f3d3b281cfb983"
   },
   "healthID": "AGSMH0801",
-  "address": "Indrajit Apartment, Behind Tirpude College, Near Bardi, Nagpur",
+  "address": "Godse Palace, Vaduj, Satara",
   "age": 20,
   "gender": "male",
   "medicalHistory": [
@@ -449,9 +478,9 @@
     }
   ],
   "password": "123456",
-  "email": "abhidesh@gmail.com",
-  "firstName": "Abhisekh",
-  "lastName": "Deshmukh",
+  "email": "ashi@gmail.com",
+  "firstName": "Ashitosh ",
+  "lastName": "Godse",
   "city": "Nagpur",
   "state": "Maharashtra",
   "pincode": "440030",
@@ -460,7 +489,7 @@
       "$numberLong": "1003689000000"
     }
   },
-  "phoneNo": "8657945237"
+  "phoneNo": "8953214699"
 },{
   "_id": {
     "$oid": "63809201037cb639c06db5fe"
@@ -471,26 +500,32 @@
   "gender": "Male",
   "medicalHistory": [
     {
-      "dateVisited": "Fri Nov 25 2022 15:32:01 GMT+0530 (India Standard Time)",
+      "dateVisited": "Mon Dec 05 2022 20:53:01 GMT+0530 (India Standard Time)",
+      "doctorID": "AGDOC3924",
       "doctorName": "Ashitosh Godse",
       "hospitalName": "Godse Clinic",
-      "disease": "common cold",
-      "symptoms": "fever",
-      "medicines": "synarist",
-      "medicineFees": "50",
-      "consultationFees": "100",
-      "prescriptionNote": "take bed rest for 3 days"
+      "hospitalAddress": "Godse Clinic, Near Faras Square, Nagpur",
+      "disease": "Common Cold",
+      "symptoms": "Fever, Cough",
+      "medicines": "Honitus, Synarist",
+      "medicineFees": "150",
+      "hospitalFees": "100",
+      "prescriptionNote": "Take rest",
+      "starReview": 5
     },
     {
-      "dateVisited": "Fri Nov 25 2022 15:32:01 GMT+0530 (India Standard Time)",
-      "doctorName": "Ashitosh Godse",
-      "hospitalName": "Godse Clinic",
-      "disease": "common cold",
-      "symptoms": "fever",
-      "medicines": "synarist",
-      "medicineFees": "50",
-      "consultationFees": "100",
-      "prescriptionNote": "take bed rest for 3 days"
+      "dateVisited": "Tue Dec 06 2022 13:55:01 GMT+0530 (India Standard Time)",
+      "doctorID": "OAef7533",
+      "doctorName": "Omkar Aynar",
+      "hospitalName": "Ayanar Hospital",
+      "hospitalAddress": "Aynar Hospital, Kolhar, Shirdi",
+      "disease": "Malaria",
+      "symptoms": "fever, cough, sore throat, stuffy nose, body aches, headache",
+      "medicines": "Oseltamivir",
+      "medicineFees": "200",
+      "hospitalFees": "150",
+      "prescriptionNote": "take rest, eat healthly food",
+      "starReview": 4
     }
   ],
   "password": "123456",
@@ -502,4 +537,23 @@
   "pincode": "445624",
   "DOB": "2000-07-23T09:56:40.000Z",
   "phoneNo": "8956478934"
+},{
+  "_id": {
+    "$oid": "639028fb45812baf47dbaec7"
+  },
+  "healthID": "BCb342b0",
+  "doctorID": "BC3ba42f",
+  "address": "Chaudhari Heights, Dwarka Nagri, Akola",
+  "age": "32",
+  "gender": "Female",
+  "medicalHistory": [],
+  "password": "123456",
+  "email": "bhakti@gmail.com",
+  "firstName": "Bhakti",
+  "lastName": "Chaudhari",
+  "city": "Akola",
+  "pincode": "444001",
+  "state": "Maharashtra",
+  "phoneNo": "9855647800",
+  "DOB": "1990-12-07T05:44:12.310Z"
 }]

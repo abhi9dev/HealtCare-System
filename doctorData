@@ -33,6 +33,21 @@
       "healthID": "ULAMH3003",
       "starReview": 3,
       "note": " good doctor"
+    },
+    {
+      "healthID": "RG4f1101",
+      "starReview": 5,
+      "note": "good doctor"
+    },
+    {
+      "healthID": "ADNMH2101",
+      "starReview": 5,
+      "note": "good doctor"
+    },
+    {
+      "healthID": "ADNMH2101",
+      "starReview": 3,
+      "note": "good doctor"
     }
   ],
   "hopitalAdd": "Godse Clinic, Near Faras Square, Nagpur",
@@ -49,13 +64,13 @@
       "$numberLong": "661804200000"
     }
   },
-  "Phone No": "9422875442"
+  "PhoneNo": "9422875442"
 },{
   "_id": {
     "$oid": "6378e0c4956d1fedf52bbb30"
   },
   "healthID": "AGSMH0801",
-  "doctorID": "AGDOC3924",
+  "doctorID": "ONDOC3924",
   "address": "Indra Apartment, Koradi Road, Mankapur, Nagpur",
   "age": 45,
   "gender": "male",
@@ -85,11 +100,6 @@
       "healthID": "AGSMH0801",
       "starReview": 4,
       "note": " good doctor"
-    },
-    {
-      "healthID": "ULAMH3003",
-      "starReview": 3,
-      "note": "good"
     }
   ],
   "hopitalAdd": "Get Well, Near Khondwa Square, Nagpur",
@@ -106,7 +116,7 @@
       "$numberLong": "785442600000"
     }
   },
-  "Phone No": "8421875442"
+  "PhoneNo": "8421875442"
 },{
   "_id": {
     "$oid": "6378e0c6956d1fedf52bbb31"
@@ -163,7 +173,7 @@
       "$numberLong": "469909800000"
     }
   },
-  "Phone No": "8421985442"
+  "PhoneNo": "8421985442"
 },{
   "_id": {
     "$oid": "6378e0c9956d1fedf52bbb32"
@@ -220,7 +230,7 @@
       "$numberLong": "785442600000"
     }
   },
-  "Phone No": "8495985442"
+  "PhoneNo": "8495985442"
 },{
   "_id": {
     "$oid": "6378e0cb956d1fedf52bbb33"
@@ -277,7 +287,7 @@
       "$numberLong": "469909800000"
     }
   },
-  "Phone No": "8495985442"
+  "PhoneNo": "8495985442"
 },{
   "_id": {
     "$oid": "6385b3e0059564c9f661e9f5"
@@ -292,8 +302,19 @@
   "email": "om5@gmail.com",
   "firstName": "Omkar",
   "lastName": "Aynar",
-  "reviews": [],
-  "hopitalAdd": "",
+  "reviews": [
+    {
+      "healthID": "ADNMH2101",
+      "starReview": 5,
+      "note": "good doctor"
+    },
+    {
+      "healthID": "RG4f1101",
+      "starReview": 4,
+      "note": "good doctor"
+    }
+  ],
+  "hopitalAdd": "Aynar Hospital, Kolhar, Shirdi",
   "hospitalName": "Ayanar Hospital",
   "city": "Shirdi",
   "hospitalCity": "Shirdi",
@@ -304,4 +325,30 @@
   "speciality": "Surgeon",
   "phoneNo": "8956784324",
   "DOB": "2001-05-20T07:23:37.000Z"
+},{
+  "_id": {
+    "$oid": "639028c5da05bb9b122c20d3"
+  },
+  "healthID": "BCb342b0",
+  "doctorID": "BC3ba42f",
+  "address": "Chaudhari Heights, Dwarka Nagri, Akola",
+  "age": "32",
+  "gender": "Female",
+  "medicalHistory": [],
+  "password": "123456",
+  "email": "bhakti@gmail.com",
+  "firstName": "Bhakti",
+  "lastName": "Chaudhari",
+  "reviews": [],
+  "hopitalAdd": "",
+  "hospitalName": "Chaudhari Hospital",
+  "city": "Akola",
+  "hospitalCity": "Akola",
+  "hospitalPincode": "444001",
+  "hospitalState": "Maharashtra",
+  "pincode": "444001",
+  "state": "Maharashtra",
+  "speciality": "Surgeon",
+  "phoneNo": "9855647800",
+  "DOB": "1990-12-07T05:44:12.310Z"
 }]

@@ -1,22 +1,21 @@
 [{
   "_id": {
-    "$oid": "6388bcce199db7b1caa3c530"
+    "$oid": "6390521e6cc0c3da303ffb85"
   },
   "id": "ADNMH2101",
-  "firstName": "Abhinav ",
+  "firstName": "Abhinav",
   "lastName": "Deshmukh",
-  "phone": "8895647100",
+  "phone": "8895647000",
   "email": "abhi@gmail.com",
   "address": "Deshmukh Palace, Mankapur, Nagpur"
 },{
   "_id": {
-    "$oid": "6388bd04199db7b1caa3c531"
+    "$oid": "639084b60f60fe3b7237339f"
   },
-  "id": "AGSMH0801",
-  "firstName": "Ashitosh ",
-  "lastName": "Godse",
-  "phone": "8953214699",
-  "email": "ashi@gmail.com",
-  "address": "Godse Palace, Vaduj, Satara",
-  "specialization": "M.D"
+  "id": "RG4f1101",
+  "firstName": "adfhoi",
+  "lastName": "jloieo",
+  "phone": "5959595",
+  "email": "kjhiu",
+  "address": "ojohoijo"
 }]
